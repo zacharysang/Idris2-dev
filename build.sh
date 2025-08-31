@@ -1,1 +1,1 @@
-docker build -t idris2-dev .
+docker compose build

@@ -1,1 +1,1 @@
-docker run -it idris2-dev
+docker compose up -d

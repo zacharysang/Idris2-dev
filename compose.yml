@@ -1,0 +1,16 @@
+services:
+  idris2-lsp:
+    build: ./idris2-lsp
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./project/testproject:/workspace
+    
+  emacs-lsp:
+    build: ./emacs-lsp
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./project:/tmp/project
+    depends_on:
+      - idris2-lsp
