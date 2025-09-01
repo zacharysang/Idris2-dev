@@ -21,7 +21,11 @@ COPY init.el /etc/emacs/init.el
 # Copy idris2-lsp wrapper script to PATH
 COPY idris2-lsp /usr/local/bin/idris2-lsp
 
-
+# Create user with same UID/GID as host user
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+RUN groupadd -g $GROUP_ID user && \
+    useradd -u $USER_ID -g $GROUP_ID -m -s /bin/bash user
 
 # Install lsp-mode with signature checking disabled (due to keyring issues in container)
 RUN emacs --batch --eval "(progn (setq package-check-signature nil) (require 'package) (setq package-archives '((\"gnu\" . \"https://elpa.gnu.org/packages/\") (\"melpa\" . \"https://melpa.org/packages/\"))) (package-initialize) (package-refresh-contents) (package-install 'lsp-mode))"
@@ -39,5 +43,7 @@ ENV TERM=xterm-256color
 EXPOSE 8080
 
 WORKDIR /tmp/project
+
+USER user
 
 CMD ["gotty", "--permit-write", "emacs", "-l", "/etc/emacs/init.el", "."]
