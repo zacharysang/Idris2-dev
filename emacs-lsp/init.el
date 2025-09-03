@@ -1,5 +1,9 @@
 ;; LSP Mode Configuration for idris2-lsp Container Connection
 
+;; Initialize packages first
+(require 'package)
+(package-initialize)
+
 (condition-case err
     (progn
       (require 'lsp-mode)
