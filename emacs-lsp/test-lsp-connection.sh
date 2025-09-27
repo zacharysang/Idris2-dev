@@ -5,8 +5,8 @@
 
 echo "=== Testing Emacs LSP Connection to idris2-lsp ==="
 
-# Create a temporary test file
-TEST_FILE="/tmp/test.idr"
+# Create a temporary test file in the mounted project directory
+TEST_FILE="/tmp/project/test.idr"
 cat > "$TEST_FILE" << 'EOF'
 module Test
 
@@ -16,14 +16,18 @@ EOF
 
 # Test LSP connection using emacs in batch mode
 # Initialize packages first, then load init.el
-timeout 30 emacs --batch \
+cd /tmp/project
+echo "i" | timeout 30 emacs --batch \
   --eval "(progn (require 'package) (package-initialize))" \
-  --load /etc/emacs/init.el \
+  --load /home/user/.emacs.d/init.el \
   --eval "(progn
     (find-file \"$TEST_FILE\")
     (idris2-mode)
     (condition-case err
         (progn
+          ;; Set default-directory to project root before calling lsp
+          ;; LSP uses default-directory for project detection and root calculation
+          (setq default-directory \"/tmp/project/\")
           (lsp)
           (sit-for 5)  ; Wait for LSP to initialize
           (if (lsp-workspaces)

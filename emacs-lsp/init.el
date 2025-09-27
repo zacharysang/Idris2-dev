@@ -9,8 +9,17 @@
       (require 'lsp-mode)
       (message "lsp-mode loaded successfully")
       
-      ;; Set LSP keymap prefix
-      (setq lsp-keymap-prefix "M-l")
+      ;; Enable comprehensive LSP debugging
+      (setq lsp-log-io t)
+      (setq lsp-trace t)
+      (setq lsp-print-performance t)
+      (setq lsp-log-max 1000)
+      (setq lsp-enable-file-watchers nil)
+      (setq lsp-tcp-connection-timeout 30)
+      (setq lsp-response-timeout 30)
+      
+      ;; Set LSP keymap prefix (C-c l to avoid conflict with M-l downcase)
+      (setq lsp-keymap-prefix "C-c l")
        
       ;; Define minimal idris2 major mode
       (define-derived-mode idris2-mode prog-mode "Idris2"
@@ -18,12 +27,17 @@
       
       ;; Register LSP client using standard idris2-lsp command
       ;; The idris2-lsp "binary" is actually a wrapper script that uses netcat
+      ;; idris2-lsp configuration options: https://github.com/idris-community/idris2-lsp?tab=readme-ov-file#configuration-options
+      ;; lsp-mode initialization-options: https://github.com/emacs-lsp/lsp-mode/blob/1b13d7c1b39aaad12073095ef7719952568c45db/lsp-mode.el#L1623
       (lsp-register-client
        (make-lsp-client 
         :new-connection (lsp-stdio-connection "idris2-lsp")
         :major-modes '(idris2-mode)
         :server-id 'idris2-lsp
-        :remote? t))
+        :remote? t
+        :initialization-options (lambda ()
+                                  '(:maxCodeActionResults 20
+                                    :showImplicits t))))
       
       ;; Language ID mapping
       (add-to-list 'lsp-language-id-configuration '(idris2-mode . "idris2"))
