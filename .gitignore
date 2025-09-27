@@ -1,3 +1,6 @@
+# ignore amazonq files
 project
 todo.md
 notes.md
+*.q-history
+
