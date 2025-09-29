@@ -19,6 +19,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /home/zak/idris2-lsp:/tmp/project
+      - /home/zak/idris2-lsp:/workspace
     depends_on:
       - idris2-lsp

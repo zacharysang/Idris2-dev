@@ -3,4 +3,4 @@ project
 todo.md
 notes.md
 *.q-history
-
+*.conversation
