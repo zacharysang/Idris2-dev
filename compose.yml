@@ -1,3 +1,4 @@
+# Usage: PROJECT_PATH=/path/to/idris2-lsp docker compose up
 services:
   idris2-lsp:
     build: 
@@ -8,7 +9,7 @@ services:
     ports:
       - "3030:3030"
     volumes:
-      - /home/zak/idris2-lsp:/workspace
+      - ${PROJECT_PATH}:/workspace
     
   emacs-lsp:
     build: 
@@ -19,6 +20,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - /home/zak/idris2-lsp:/workspace
+      - ${PROJECT_PATH}:/workspace
     depends_on:
       - idris2-lsp
