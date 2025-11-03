@@ -9,7 +9,7 @@ services:
     ports:
       - "3030:3030"
     volumes:
-      - ${PROJECT_PATH}:/workspace
+      - ${PROJECT_PATH:-/tmp/a}:/workspace
     
   emacs-lsp:
     build: 
@@ -20,6 +20,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ${PROJECT_PATH}:/workspace
+      - ${PROJECT_PATH:-/tmp/a}:/workspace
     depends_on:
       - idris2-lsp
