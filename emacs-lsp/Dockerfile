@@ -6,11 +6,10 @@ RUN apt-get update && apt-get install -y wget software-properties-common ca-cert
 RUN add-apt-repository ppa:kelleyk/emacs && apt-get update
 RUN apt-get install -y emacs28-nox
 
-# Install gotty
-RUN wget https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz && \
-    tar -xzf gotty_linux_amd64.tar.gz && \
-    mv gotty /usr/local/bin/ && \
-    rm gotty_linux_amd64.tar.gz
+# Install Node.js and wetty
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs build-essential python3 && \
+    npm install -g wetty
 
 # Create user with same UID/GID as host user
 ARG USER_ID=1000
@@ -49,4 +48,4 @@ EXPOSE 8080
 
 WORKDIR /workspace 
 
-CMD ["gotty", "--permit-write", "emacs", "-l", "/home/user/.emacs.d/init.el", "."]
+CMD ["wetty", "--port", "8080", "--host", "0.0.0.0", "--command", "emacs -l /home/user/.emacs.d/init.el ."]
