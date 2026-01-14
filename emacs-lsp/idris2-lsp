@@ -1,3 +1,0 @@
-#!/bin/bash
-# Wrapper script for idris2-lsp that connects to containerized server via netcat
-exec nc idris2-lsp 3030

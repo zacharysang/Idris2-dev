@@ -4,3 +4,6 @@ todo.md
 notes.md
 *.q-history
 *.conversation
+*.chat
+*.plan
+*.investigation

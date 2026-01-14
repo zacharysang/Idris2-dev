@@ -1,0 +1,5 @@
+# ignore submodule
+idris2-mode
+
+# emacs cache file
+eln-cache

@@ -1,0 +1,10 @@
+# Usage: PROJECT_PATH=/path/to/idris2-lsp docker compose up
+services:
+  idris2-lsp:
+    build: 
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    volumes:
+      - ${PROJECT_PATH:-/tmp/a}:/workspace 
