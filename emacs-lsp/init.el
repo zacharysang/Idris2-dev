@@ -16,15 +16,19 @@
 
 (require 'lsp-mode)
 
+;; Disable built-in idris2-lsp client
+;;(setq lsp-disabled-clients '(idris2-lsp))
+
 ;; Define idris2 major mode
 (define-derived-mode idris2-mode prog-mode "Idris2")
 
 ;; Register LSP client for containerized idris2-lsp
 (lsp-register-client
  (make-lsp-client 
-  :new-connection (lsp-tcp-connection (lambda (_) '("localhost" 3030)))
+  :new-connection (lsp-stdio-connection "/home/zak/idris2-dev/emacs-lsp/idris2-lsp-wrapper.sh")
   :major-modes '(idris2-mode)
-  :server-id 'idris2-lsp))
+  :server-id 'idris2-lsp-container
+  ));;:priority 1))
 
 ;; File extension mapping
 (add-to-list 'auto-mode-alist '("\\.idr\\'" . idris2-mode))
