@@ -1,0 +1,10 @@
+lsp:
+  server:
+    type: docker
+    subtype: image
+    name: idris2-lsp:latest
+    server: idris2-lsp
+    launch_command: "idris2-lsp"
+  mappings:
+    - source: "."
+      destination: "/workspace"

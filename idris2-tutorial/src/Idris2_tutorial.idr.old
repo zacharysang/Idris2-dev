@@ -1,0 +1,4 @@
+module Idris2_tutorial
+
+test : String
+test = "Hello from Idris2!"

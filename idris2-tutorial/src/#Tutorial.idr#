@@ -1,0 +1,54 @@
+cmodule Tutorial
+
+------------------------------------------------
+-- File to demo lsp functionality for idris2-lsp
+------------------------------------------------
+
+-- 1. Getting our bearings : Highlighting, List available symbols, Symbol information, Goto definitions, Hover
+
+-- 'symbols' generally mean language entities like variables, constants, functions, etc.
+-- below are a couple of sample symbol definitions
+
+demoTrivialFunction : Nat -> Nat
+demoTrivialFunction x = x
+
+demoNestedFunction : List Nat -> Na
+demoNestedFunction [] acc = acc
+demoNestedFunction a::rest = (demoNestedFunction rest (acc + a) 
+
+{-
+should see highlighted above:
+  - function name
+  - type definition
+  - arguments
+  - corresponding args under cursor
+
+
+
+-}
+-- 1a. List available symbols (vars, metavars, implicits, types, holes, etc.)
+
+
+
+
+-- 1b. Understanding symboles in place with hovers and info
+
+-- 1c. Diving deeper with goto
+
+-- 2. Diagnostics : understanding problems
+
+-- 2a. opening diagnostic window
+
+-- 2b. Repl to tinker
+
+-- 3. Authoring programs
+
+-- 3a. Autocompleting
+
+-- 3b. Case splitting / make case
+
+-- 3_. Make lemma / clause
+
+-- 3_. Expression searching
+
+-- 3_. Refining holes
