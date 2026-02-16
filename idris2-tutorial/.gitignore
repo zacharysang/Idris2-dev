@@ -1,2 +1,7 @@
 build/
+
+# ignore emacs backup files
 *.*~
+\#*
+.\#*
+

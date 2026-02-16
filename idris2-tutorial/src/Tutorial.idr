@@ -20,7 +20,7 @@ demoTrivialFunction x = x
  When you hover over a symbol, all instances of that symbol should become highlighted
  
  Additionally, you get a bunch of other information when you hover, you also get:
-     - the fully qualified name of the symbol
+     - the fully qualified name of the symbol (ie: the name including the full module path)
      - if part of a function, you get the qualified name of the arguments and return types
      - available code actions
 -}
@@ -51,7 +51,7 @@ doubleIt x = (demoTrivialFunction (2 * x))
 {-
 What if we want to show available symbols outside of autocomplete? We can use C-M-i to pull up completion at point.
 
-This should open a draw with all available symbols in scope
+This should open a drawer with all available symbols in scope
 
 This should be explained in the opened drawer, but you can use M-<up|down> to move between completions, and then M-<enter> to select
 
@@ -59,7 +59,9 @@ After selecting a completion, use M-<delete> to delete
 
 -}
 
---- Try completion at point here --
+--- Try completion at point below: --
+
+
 
 --- Here^ ---
 
@@ -72,24 +74,27 @@ As we edit the code a few things will happen:
   - these will also show up in the modeline at the project level
 
 Try to perform a QuickFix on the function below with the following steps:
-1. delete a part of the 'Nat' type (eg: 'Na') to trigger an error (you should see 'QuickFix: ...' to the right at this point - if not, try to save (C-x C-s) to trigger an LSP request)
-2. C-l to start the prefix. 'which-key' should automatically populate potential options
+1. Uncomment the below erroneous code
+2. C-c l to start the prefix. 'which-key' should automatically populate potential options
 3. select 'a' for code action. wait for further prompts to see next round of recommendations from which key
 4. select 'a' again. At this point you should see "Select code action: ..."
 5. hit <Tab> to see available code actions. This should include QuickFixes
 6. continue to type and Tab to complete until the full code action is selected
 7. hit enter for this to take effect
+8. C-x C-s to save and refresh
 
--}
-
+-- erroneous code
 functionToFix : Nat -> Nat
 functionToFix a = a
+
+-}
 
 -- 2a. opening diagnostic window
 
 {-
 
 Uncomment the below to expose a few instances of erroneous code
+
 
 wrongNumberOfArgs : Nat -> Nat -> Nat
 wrongNumberOfArgs x = x
