@@ -1,0 +1,135 @@
+#+TITLE: Introduction to Idris2
+#+AUTHOR: Literate Programming Tutorial
+#+PROPERTY: header-args:idris2 :session *idris2* :exports both
+
+* Introduction
+
+Welcome to this Idris2 tutorial using literate programming with Org Babel. Idris2 is a /pure/, /dependently typed/, /total/ /functional/ programming language.
+
+** About Idris2
+
+- *Functional*: Functions are first-class constructs
+- *Pure*: Functions have no side effects and are referentially transparent
+- *Dependently Typed*: Types can depend on values
+- *Total*: Functions are guaranteed to terminate
+
+* Using the REPL
+
+Idris comes with a REPL (Read Evaluate Print Loop) for interactive experimentation. We can evaluate simple arithmetic expressions:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+2 * 4
+#+end_src
+
+#+begin_src idris2 :cmd idris2-docker-repl
+3 * (7 + 100)
+#+end_src
+
+We can inspect types using the =:t= command:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+:t 2
+#+end_src
+
+Integer literals default to the =Integer= type, which is an arbitrary precision signed integer. Other primitive types include =Bits8=, =Bits16=, =Bits32=, =Bits64=, =Int8=, =Int16=, =Int32=, =Int64=, =Double=, =Char=, and =String=.
+
+* A First Idris Program
+
+Here's the mandatory "Hello World" program:
+
+#+begin_src idris2 :cmd idris2-docker-oneshot
+main : IO ()
+main = putStrLn "Hello World!"
+#+end_src
+
+The =main= function has type =IO ()=, indicating it performs I/O operations and returns unit (nothing meaningful). The =putStrLn= function prints a string followed by a newline.
+
+* The Shape of an Idris Definition
+
+An Idris function consists of:
+1. The function's name
+2. Its type declaration
+3. Its implementation
+
+** Constants
+
+Let's define a constant for the largest unsigned 8-bit integer:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+maxBits8 : Bits8
+maxBits8 = 255
+#+end_src
+
+We can evaluate it:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+maxBits8
+#+end_src
+
+And use it in expressions:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+maxBits8 - 100
+#+end_src
+
+** Functions with Arguments
+
+Here's a function that calculates the distance from a value to the maximum:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+distanceToMax : Bits8 -> Bits8
+distanceToMax n = maxBits8 - n
+#+end_src
+
+The type =Bits8 -> Bits8= means: "a function taking one =Bits8= argument and returning a =Bits8= result."
+
+Let's test it:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+distanceToMax 12
+#+end_src
+
+** The Square Function
+
+Here's a function to calculate the square of an integer:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+square : Integer -> Integer
+square n = n * n
+#+end_src
+
+Testing:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+square 10
+#+end_src
+
+* Type Safety
+
+Idris is statically typed - we cannot freely mix types. We must use =cast= to convert between types:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+square (cast maxBits8)
+#+end_src
+
+Without casting, mixing types causes a type error. Note that =cast maxBits8= converts to =Integer= before squaring, avoiding overflow.
+
+If we squared =maxBits8= directly as =Bits8=, the result would overflow:
+
+#+begin_src idris2 :cmd idris2-docker-repl
+maxBits8 * maxBits8
+#+end_src
+
+The result is 1 due to overflow in 8-bit arithmetic (255 * 255 = 65025, which wraps around).
+
+* Summary
+
+In this tutorial, we covered:
+- Basic REPL usage and arithmetic
+- Type inspection with =:t=
+- Writing a simple =main= function
+- Defining constants and functions
+- Function types and type safety
+- Type conversion with =cast=
+
+Idris's strong type system catches errors at compile time, making programs more robust.
