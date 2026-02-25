@@ -1,6 +1,11 @@
 #+TITLE: Introduction to Idris2
 #+AUTHOR: Literate Programming Tutorial
-#+PROPERTY: header-args:idris2 :session *idris2* :exports both
+
+* Setup
+
+This tutorial uses Docker containers for running Idris2 code. To execute code blocks, position your cursor inside a block and press =C-c C-c=.
+
+Make sure you've loaded =idris2-babel-config.el= in your Emacs configuration.
 
 * Introduction
 
@@ -17,17 +22,17 @@ Welcome to this Idris2 tutorial using literate programming with Org Babel. Idris
 
 Idris comes with a REPL (Read Evaluate Print Loop) for interactive experimentation. We can evaluate simple arithmetic expressions:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 2 * 4
 #+end_src
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 3 * (7 + 100)
 #+end_src
 
 We can inspect types using the =:t= command:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 :t 2
 #+end_src
 
@@ -37,7 +42,7 @@ Integer literals default to the =Integer= type, which is an arbitrary precision 
 
 Here's the mandatory "Hello World" program:
 
-#+begin_src idris2 :cmd idris2-docker-oneshot
+#+begin_src idris2
 main : IO ()
 main = putStrLn "Hello World!"
 #+end_src
@@ -55,20 +60,20 @@ An Idris function consists of:
 
 Let's define a constant for the largest unsigned 8-bit integer:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 maxBits8 : Bits8
 maxBits8 = 255
 #+end_src
 
 We can evaluate it:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 maxBits8
 #+end_src
 
 And use it in expressions:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 maxBits8 - 100
 #+end_src
 
@@ -76,7 +81,7 @@ maxBits8 - 100
 
 Here's a function that calculates the distance from a value to the maximum:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 distanceToMax : Bits8 -> Bits8
 distanceToMax n = maxBits8 - n
 #+end_src
@@ -85,7 +90,7 @@ The type =Bits8 -> Bits8= means: "a function taking one =Bits8= argument and ret
 
 Let's test it:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 distanceToMax 12
 #+end_src
 
@@ -93,14 +98,14 @@ distanceToMax 12
 
 Here's a function to calculate the square of an integer:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 square : Integer -> Integer
 square n = n * n
 #+end_src
 
 Testing:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 square 10
 #+end_src
 
@@ -108,7 +113,7 @@ square 10
 
 Idris is statically typed - we cannot freely mix types. We must use =cast= to convert between types:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 square (cast maxBits8)
 #+end_src
 
@@ -116,7 +121,7 @@ Without casting, mixing types causes a type error. Note that =cast maxBits8= con
 
 If we squared =maxBits8= directly as =Bits8=, the result would overflow:
 
-#+begin_src idris2 :cmd idris2-docker-repl
+#+begin_src idris2
 maxBits8 * maxBits8
 #+end_src
 
